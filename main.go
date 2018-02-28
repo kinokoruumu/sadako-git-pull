@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/faiface/beep"
 	"github.com/faiface/beep/mp3"
 	"github.com/faiface/beep/speaker"
 )
@@ -18,9 +19,13 @@ func run() error {
 	if err != nil {
 		return err
 	}
+	done := make(chan struct{})
 	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
-	speaker.Play(s)
-	select {}
+	speaker.Play(beep.Seq(s, beep.Callback(func() {
+		close(done)
+	})))
+	_ = <-done
+	return nil
 }
 
 func main() {
