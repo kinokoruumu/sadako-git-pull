@@ -7,6 +7,6 @@
 ```
   $ git clone ...
   $ cd sadako-git-pull
-  $ go build -o .git/hooks/post-marge
+  $ go build -o .git/hooks/post-merge
   $ cp sadako.mp3 .git/hooks
 ```
